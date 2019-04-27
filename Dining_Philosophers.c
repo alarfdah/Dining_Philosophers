@@ -5,13 +5,16 @@
  * Author: Ahmed Radwan
  */
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <semaphore.h>
 #include <pthread.h>
+
 
 #define PHILOSOPHERS 5
 #define FORKS 5
 
-void philosopher_process() {
+void *philosopher_process() {
 
 }
 
@@ -23,7 +26,7 @@ int main(int argc, char **argv) {
 	pthread_t philosopher[PHILOSOPHERS];
 
 	// Create semaphores/'forks'
-	sem_t fork[FORKS];
+	sem_t *fork[FORKS];
 
 	for (i = 0; i < PHILOSOPHERS; i++) {
 		// Malloc for each semaphore
