@@ -18,7 +18,6 @@
 
 
 int get_forks(sem_t *fork_left, sem_t *fork_right, int index) {
-
 	struct timespec time;
 	int timedwaitResult = 0;
 	int deadlock = 0;
@@ -41,8 +40,6 @@ int get_forks(sem_t *fork_left, sem_t *fork_right, int index) {
 	if (timedwaitResult == -1) {
 		printf("Philosopher %d couldn't grab the RIGHT fork... DEADLOCK.\n", index);
 		deadlock = 1;
-		return deadlock;
-		sleep(rand() % 5);
 	} else {
 		printf("Philosopher %d grabbed BOTH the forks\n", index);
 		deadlock = 0;

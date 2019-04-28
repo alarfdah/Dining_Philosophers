@@ -25,30 +25,30 @@ int get_forks(sem_t *fork_left, sem_t *fork_right, int index) {
 	int done = 0;
 
 	do {
-			clock_gettime(CLOCK_REALTIME, &time);
-			time.tv_sec += 1;
+		clock_gettime(CLOCK_REALTIME, &time);
+		time.tv_sec += 1;
 
-			// Grab fork to the left
-			sem_wait(fork_left);
-			printf("Philosopher %d grabbed the LEFT fork\n", index);
+		// Grab fork to the left
+		sem_wait(fork_left);
+		printf("Philosopher %d grabbed the LEFT fork\n", index);
 
-			// Wait for other Philosophers to grab the left fork
-			sleep(1);
+		// Wait for other Philosophers to grab the left fork
+		sleep(1);
 
-			// Try to grab the fork to the right
-			timedwaitResult = sem_timedwait(fork_right, &time);
-			printf("Philosopher %d is trying to grab the RIGHT fork\n", index);
+		// Try to grab the fork to the right
+		timedwaitResult = sem_timedwait(fork_right, &time);
+		printf("Philosopher %d is trying to grab the RIGHT fork\n", index);
 
-			// If I couldn't get the fork to the right
-			if (timedwaitResult == -1) {
-				printf("Philosopher %d couldn't grab the RIGHT fork... Releasing LEFT fork.\n", index);
-				sem_post(fork_left);
-				sleep(rand() % 5);
-				count++;
-			} else {
-				printf("Philosopher %d grabbed BOTH the forks\n", index);
-				done = 1;
-			}
+		// If I couldn't get the fork to the right
+		if (timedwaitResult == -1) {
+			printf("Philosopher %d couldn't grab the RIGHT fork... Releasing LEFT fork.\n", index);
+			sem_post(fork_left);
+			sleep(rand() % 5);
+			count++;
+		} else {
+			printf("Philosopher %d grabbed BOTH the forks\n", index);
+			done = 1;
+		}
 
 	} while (!done);
 
