@@ -1,3 +1,2 @@
-all:
-	gcc -std=c99 -Wall -o Dining_Philosophers Dining_Philosophers.c
-
+all: 
+	gcc -Wall -g -o starvation starvation.c priority_queue.c -lpthread
