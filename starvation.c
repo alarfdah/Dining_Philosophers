@@ -37,7 +37,7 @@ int get_seat(sem_t *seat_one, sem_t *seat_two, sem_t *seat_three, sem_t *seat_fo
 	timedwaitResult = sem_timedwait(seat_two, &time);
 	if (timedwaitResult != -1) {
 			sleep(1);
-			printf("Philosopher %d grabbed seat ONE.\n", index);
+			printf("Philosopher %d grabbed seat TWO.\n", index);
 			return 1;
 	}
 
@@ -46,7 +46,7 @@ int get_seat(sem_t *seat_one, sem_t *seat_two, sem_t *seat_three, sem_t *seat_fo
 	timedwaitResult = sem_timedwait(seat_three, &time);
 	if (timedwaitResult != -1) {
 			sleep(1);
-			printf("Philosopher %d grabbed seat ONE.\n", index);
+			printf("Philosopher %d grabbed seat THREE.\n", index);
 			return 1;
 	}
 
@@ -55,7 +55,7 @@ int get_seat(sem_t *seat_one, sem_t *seat_two, sem_t *seat_three, sem_t *seat_fo
 	timedwaitResult = sem_timedwait(seat_four, &time);
 	if (timedwaitResult != -1) {
 			sleep(1);
-			printf("Philosopher %d grabbed seat ONE.\n", index);
+			printf("Philosopher %d grabbed seat FOUR.\n", index);
 			return 1;
 	}
 
