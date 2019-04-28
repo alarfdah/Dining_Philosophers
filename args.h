@@ -9,14 +9,11 @@
 #include <semaphore.h>
 #include "forks.h"
 #include "seats.h"
-#include "priority_queue.h"
-
 #define FORKS 5
 
 typedef struct arguments_struct {
     int index;
     Forks *fork_sem;
     Seats *seat_sem;
-    Node **queue;
 } arguments;
 #endif
