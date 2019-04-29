@@ -85,6 +85,10 @@ void *philosopher_process(void * myargs) {
 
 	deadlock_count += get_forks(fork_left, fork_right, args->index);
 	printf("DONE: Philosopher %d is %s.\n", args->index, deadlock_count == 1? "deadlocked" : "NOT deadlocked");
+	// This sleep waits for all the threads
+	// to try and pick up the right fork before
+	// the current threads releases its fork
+	sleep(1);
 	sem_post(fork_left);
 	sem_post(fork_right);
 	sem_close(fork_left);
