@@ -3,7 +3,7 @@
 ## Free of Deadlocks And Starvation Version
 The versions I used is actually vulnerable to deadlocks. However, I implement a way of detecting and recovering from the deadlock making it a deadlock free. It is also free from starvation since each philosopher is ensured at least one use of both forks at the same time.
 
-### Implementaiton 
+### Implementaiton
 * In the beginning all the threads grab the left fork using `sem_wait()`
     * A 1 second `sleep()` is put right after the `sem_wait()` to allow all the other threads to grab the left fork before any thread manages to get the right fork.
 * For the right fork, `sem_timedwait()` is used in order to check for deadlocks.
@@ -49,7 +49,7 @@ do {
 
 
 ## Deadlock Version
-The version with deadlock is similar to the deadlock free version. The only difference is whether I loop back to try and get left and right fork after some random time or just exist the function reporting a deadlock.
+In this version, they all grab the left fork so they all get deadlocked in a circle where no one can grab the right fork. The version with deadlock is similar to the deadlock free version. The only difference is whether I loop back to try and get left and right fork after some random time or just exist the function reporting a deadlock. A `sleep(1)` was also added right after the call to the function `get_forks()` to ensure that all the threads have tried grabbing the right fork before they release all their forks and exit.
 
 ### Implementation
 ```C
@@ -63,6 +63,21 @@ if (timedwaitResult == -1) {
 }
 
 return deadlock;
+```
+
+```C
+deadlock_count += get_forks(fork_left, fork_right, args->index);
+printf("DONE: Philosopher %d is %s.\n", args->index, deadlock_count == 1? "deadlocked" : "NOT deadlocked");
+// This sleep waits for all the threads
+// to try and pick up the right fork before
+// the current threads releases its fork
+sleep(1);
+sem_post(fork_left);
+sem_post(fork_right);
+sem_close(fork_left);
+sem_close(fork_right);
+
+pthread_exit(NULL);
 ```
 
 ## Starvation Version
